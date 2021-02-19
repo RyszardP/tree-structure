@@ -1,27 +1,17 @@
 package optional_task.task1;
 
+import optional_task.util.ReadWriteUtils;
+
 import java.io.*;
 
 
 public class Task1 {
     public static void main(String[] args) throws IOException {
+        final String PATH = "./src/main/resources/optional_task_resources/";
+        final String FILE_NAME = "task1.txt";
+        ReadWriteUtils.createFile(PATH, FILE_NAME);
+       // WriteRead.writeToFile(PATH, FILE_NAME, "umba");
+        ReadWriteUtils.writeRandomNumbers(PATH, FILE_NAME,70);
 
-        try {
-
-            File f = new File("./src/main/resources/optional_task_resources/example.txt");
-            if (f.createNewFile())
-                System.out.println("File created");
-        } catch (Exception e) {
-            System.err.println(e);
-        }
-
-        try (FileWriter writer = new FileWriter("./optional_task_resources/Task1.txt", false)) {
-            String text = "first task text";
-            writer.write(text);
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
     }
 }

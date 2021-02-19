@@ -1,5 +1,6 @@
 package optional_task.util;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,14 +23,22 @@ public class RandomNumber {
         return randomScoresList;
     }
 
-    public static double averageNumber(List<Integer> randomScoresList) {
-        Integer sum = 0;
-        if (!randomScoresList.isEmpty()) {
-            for (Integer mark : randomScoresList) {
-                sum += mark;
+    public static void writeRandomNumbers(String filePath, int quantity) {
+        int x = 0;
+        try {
+            File file = new File(filePath);
+            FileWriter filewriter = new FileWriter(file);
+            BufferedWriter writer = new BufferedWriter(filewriter);
+
+            for (int i = 0; i < quantity; i++) {
+                x = (int) (Math.random() * 10 + 10);
+                writer.write(" " + x);
             }
-            return sum.doubleValue() / randomScoresList.size();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return sum;
     }
+
+
 }
