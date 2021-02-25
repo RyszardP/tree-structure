@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class ReadWriteUtils {
@@ -125,6 +127,41 @@ public class ReadWriteUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void lowCaseToUpperCase(String file, String fileOutput) {
+        try (FileWriter writer = new FileWriter(fileOutput);
+             FileReader reader = new FileReader(file);
+             BufferedWriter bufferedWriter = new BufferedWriter(writer);
+             BufferedReader bufferedReader = new BufferedReader(reader)) {
+
+            String line = null;
+            String word = null;
+            StringBuffer buffer = new StringBuffer();
+            Pattern pattern = Pattern.compile(".{2,}");
+
+            while ((line = bufferedReader.readLine()) != null) {
+                Scanner scan = new Scanner(line);
+                while (scan.hasNext()) {
+                    word = scan.next();
+                    Matcher matcher = pattern.matcher(word);
+                    if (matcher.matches()) {
+                        buffer.append(matcher.group().toUpperCase() + " ");
+                    } else {
+                        buffer.append(word + " ");
+                    }
+
+                }
+                bufferedWriter.write(buffer.toString(), 0, line.length());
+                bufferedWriter.newLine();
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
